@@ -4,6 +4,10 @@ Capture legacy behavior once, then replay it against a modern replacement. Battl
 
 This repository contains an [agent skill](.agents/skills/oracle-migration/SKILL.md), a [migration playbook](.agents/skills/oracle-migration/references/playbook.md), and a working SLICOT-to-Go demonstration. Invoke the repository-local skill as `$oracle-migration`.
 
+## Learn the pattern
+
+Follow the [guided teaching module](docs/teaching/README.md) from a fresh clone, with screen-navigation steps and [reusable Codex CLI prompts](docs/teaching/prompts.md).
+
 ## Verify the translation
 
 ```sh
