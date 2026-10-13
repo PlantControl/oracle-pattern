@@ -2,6 +2,8 @@
 
 A guided Terminal walkthrough for developers who can run shell commands. Learn to identify the behavior contract, replay recorded legacy behavior against a replacement, and distinguish evidence from an agent's explanation.
 
+> **New:** the [Claude Code edition](claude-code/README.md) rewrites `MB01UD` in Go with the code-modernization plugin, in nine chapter videos. This page is the Codex CLI edition, which verifies an existing translation.
+
 The demonstration uses Codex CLI. The repository commands and [reusable prompts](prompts.md) can also be used with another coding agent's CLI; adapt its launcher, permissions, and skill-loading syntax.
 
 The selected edition is **9:00**, with AI-generated narration using OpenAI's Cedar voice, real Codex CLI screen footage, readable evidence panels, and captions. Use the [spoken transcript](transcript.md), [interactive questions](explore-with-ai.md), and [reusable prompts](prompts.md) to follow along. [Reference and editing notes](reference-review.md) explain the approach.

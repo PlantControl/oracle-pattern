@@ -1,0 +1,5 @@
+{
+  "enabledPlugins": {
+    "code-modernization@claude-plugins-official": true
+  }
+}

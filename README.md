@@ -8,6 +8,8 @@ This repository contains an [agent skill](.agents/skills/oracle-migration/SKILL.
 
 Follow the [guided teaching module](docs/teaching/README.md) from a fresh clone, with screen-navigation steps and [reusable Codex CLI prompts](docs/teaching/prompts.md).
 
+The [Claude Code edition](docs/teaching/claude-code/README.md) goes further: Claude Code and the code-modernization plugin rewrite `MB01UD` in Go from intent to a signed, oracle-backed proof, in nine short chapter videos.
+
 ## Verify the translation
 
 ```sh
