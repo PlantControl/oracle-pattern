@@ -1,0 +1,63 @@
+{
+  "schema": 2,
+  "kind": "legacy-baseline",
+  "routine": "SB03MD",
+  "policy": "sb03md-float64-v1",
+  "seeds": [
+    20260911,
+    20260912
+  ],
+  "random_cases_per_seed": 100,
+  "count": 480,
+  "calls_sha256": "aa4f983b92e0a69a353e635b5623c30dcea42bc40c0eb44a7d8c2d38735bea7c",
+  "reference": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.5",
+    "fortran": "GNU Fortran (Homebrew GCC 15.2.0_1) 15.2.0",
+    "backend": "Homebrew OpenBLAS; see linked-library hashes",
+    "linked_libraries": "/var/folders/rv/ppsptyvn01nc6n8b6n93xm9c0000gn/T/sb03md-capture-024cpgbx/sb03md-reference:\n\t/opt/homebrew/opt/openblas/lib/libopenblas.0.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/opt/homebrew/opt/gcc/lib/gcc/current/libgfortran.5.dylib (compatibility version 6.0.0, current version 6.0.0)\n\t/opt/homebrew/opt/gcc/lib/gcc/current/libquadmath.0.dylib (compatibility version 1.0.0, current version 1.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+    "linked_sha256": {
+      "/opt/homebrew/Cellar/openblas/0.3.33/lib/libopenblasp-r0.3.33.dylib": "578194952493651b19d2fc1db4bf6ec5b8506b8d4cd6e35054eb62b0ca79d966",
+      "/opt/homebrew/Cellar/gcc/15.2.0_1/lib/gcc/current/libgfortran.5.dylib": "624e083bf9ebdcd8c6713ef8adaf1aa49ec2a1756cd0dbaed553fd48fc3e6950",
+      "/opt/homebrew/Cellar/gcc/15.2.0_1/lib/gcc/current/libquadmath.0.dylib": "773034db811835ca98358409e647c46a97cb9dc3f4fbb6956c858e5a31cdf580"
+    },
+    "reference_commit": "4a752c35ab540ce6291be8590dd7ed47086fe4ff",
+    "project_commit": "859d1d2f444e0df547bc8c476e78546376779a69",
+    "project_dirty": true,
+    "compile_command": [
+      "/opt/homebrew/bin/gfortran",
+      "-O2",
+      "-fcheck=all",
+      "-fno-fast-math",
+      "/Users/josephj/workspace/oracle-pattern/oracle/reference/sb03md.f90",
+      "/Users/josephj/workspace/oracle-pattern/reference/SLICOT-Reference/src/SB03MD.f",
+      "/Users/josephj/workspace/oracle-pattern/reference/SLICOT-Reference/src/MB01RD.f",
+      "/Users/josephj/workspace/oracle-pattern/reference/SLICOT-Reference/src/SB03MY.f",
+      "/Users/josephj/workspace/oracle-pattern/reference/SLICOT-Reference/src/SB03MX.f",
+      "/Users/josephj/workspace/oracle-pattern/reference/SLICOT-Reference/src/SB03MW.f",
+      "/Users/josephj/workspace/oracle-pattern/reference/SLICOT-Reference/src/SB03MV.f",
+      "/Users/josephj/workspace/oracle-pattern/reference/SLICOT-Reference/src/SB04PX.f",
+      "-L/opt/homebrew/opt/openblas/lib",
+      "-lopenblas",
+      "-o",
+      "/var/folders/rv/ppsptyvn01nc6n8b6n93xm9c0000gn/T/sb03md-capture-024cpgbx/sb03md-reference"
+    ],
+    "threads": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1"
+    },
+    "source_sha256": {
+      "reference/SLICOT-Reference/src/SB03MD.f": "ec56d7ab0490594d9b24953112fa0bae05f9bd9d6714300e7ae7c4f289b4de7d",
+      "reference/SLICOT-Reference/src/MB01RD.f": "31d341f3f08edadd3a2b98e387bab2612bf829835ddbd04227a9ae6e2134a48a",
+      "reference/SLICOT-Reference/src/SB03MY.f": "a34cab17a3aca6495b947f6c2d60a10bc52b2392be4f247f382bd255ac79007a",
+      "reference/SLICOT-Reference/src/SB03MX.f": "d79c30608e7a30e52d2bd07b968b1bcb8ebcb8141b328bbc71d7b40aef3cb14b",
+      "reference/SLICOT-Reference/src/SB03MW.f": "999bb08233a4c0b30543e3c92c8007b4adfe7d1bf426942a64c2e80e442f845f",
+      "reference/SLICOT-Reference/src/SB03MV.f": "f994e6891bfc06db2f8f96ef7bd3561480696a1a7aeb825e01e5c59a086e14b0",
+      "reference/SLICOT-Reference/src/SB04PX.f": "de926061ab31a2f6c396c2ed98db7bf26feb6199bee1b7c620fec4b7da9e0e68",
+      "oracle/reference/sb03md.f90": "270ec65a73274481c418922979c6d50cd288db22ddaff284e87c393c442b1794",
+      "oracle/sb03md.py": "19af5a11459c91ae701ab47045ba34e6df31599aca3631f4eb363d3228b78b3a",
+      "oracle/run.py": "c94ce424f275751cb8e330c50a0f27457ab325f7ea257620ebe5f338cd772a03"
+    },
+    "binary_sha256": "3445c6fcf922eaa8c2db8b5395031c82272a01ea4810bfcdf8704163a6d03fdd"
+  }
+}

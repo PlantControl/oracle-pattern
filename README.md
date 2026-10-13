@@ -2,7 +2,7 @@
 
 Capture legacy behavior once, then replay it against a modern replacement. Battle-tested code becomes a versioned executable contract through recorded inputs, outputs, and state changes.
 
-This repository contains an [agent skill](.agents/skills/oracle-migration/SKILL.md), a [migration playbook](.agents/skills/oracle-migration/references/playbook.md), and a working SLICOT-to-Go demonstration. Invoke the repository-local skill as `$oracle-migration`.
+This repository contains an [agent skill](.agents/skills/oracle-migration/SKILL.md), a [migration playbook](.agents/skills/oracle-migration/references/playbook.md), and working SLICOT-to-Go demonstrations. Invoke the repository-local skill as `$oracle-migration`.
 
 ## Learn the pattern
 
@@ -20,12 +20,19 @@ make verify
 
 Requirements: Go 1.24+, Python 3.10+, Make, and the Go module dependency. Verification runs Go against checked-in legacy recordings. It does not require Fortran, OpenBLAS, or an initialized reference submodule. The initial Gonum module download may require network access.
 
-The pilot translates `MB01UD`, a Hessenberg matrix product, into [`hessenberg.Product`](hessenberg/product.go) using Gonum BLAS. Its [baseline](oracle/baselines/mb01ud-v1/manifest.json) contains 1,405 calls captured from the pinned SLICOT implementation. Inputs, expected outputs, status, and harness caller identity are stored in compressed records beside the manifest. These are synthetic harness scenarios, not production application traces.
+The first pilot translates `MB01UD`, a Hessenberg matrix product, into [`hessenberg.Product`](hessenberg/product.go) using Gonum BLAS. Its [baseline](oracle/baselines/mb01ud-v1/manifest.json) contains 1,405 calls captured from the pinned SLICOT implementation. Inputs, expected outputs, status, and harness caller identity are stored in compressed records beside the manifest. These are synthetic harness scenarios, not production application traces.
+
+The second translates **`SB03MD`**, including its continuous/discrete Lyapunov solvers, into [`lyapunov.Solve`](lyapunov/solve.go). Its [accepted baseline](oracle/baselines/sb03md-v4/manifest.json) contains 500 calls, with 13 additional recorded inner-solver probes. It supports supplied/computed Schur factors, transpose modes, solution/separation/both jobs, overflow scaling, and perturbation diagnostics. See the [SB03MD contract](docs/sb03md-contract.md) for the API and the basis-dependent interpretation of separation estimates.
+
+Run `make verify-offline` to repeat verification in a clean temporary copy without reference sources, with CGO and module-network access disabled. This requires the pinned Go module to be cached.
+
+Both translations use the PlantControl Gonum fork **`plantcontrol.org/v1/gonum`**, pinned to main at `9bd00a95` (`v0.20.8-0.20261013101244-9bd00a95089a`). `make verify` checks both corpora offline.
 
 Replay one recorded call:
 
 ```sh
 uv run python3 oracle/run.py verify --case asymmetric-LT --report artifacts/replay.json
+python3 oracle/sb03md.py verify --case grid-DBFN-6
 ```
 
 See the [contract](docs/mb01ud-contract.md) for numerical bounds and API differences, and [acceptance evidence](docs/acceptance.md) for results. The primary acceptance system is recorded legacy behavior; small infrastructure checks and compiled negative controls establish that it can detect defects.
@@ -40,12 +47,12 @@ uv run python3 oracle/run.py capture --output oracle/baselines/mb01ud-v2 --seed 
 make audit
 ```
 
-`capture` creates a new baseline and refuses to overwrite an existing directory. `audit` reruns the reference against stored inputs. Neither needs Go. Verification and audit never modify the baseline. Reports live under ignored `artifacts/`, and builds use automatically cleaned temporary directories.
+`capture` creates a new baseline and refuses to overwrite an existing directory. `audit` reruns the reference against stored inputs. Routine `capture` and `audit` commands build only Fortran. `make audit` also includes a cross-factor diagnostic that builds Go. Verification and audit never modify the baseline. Reports live under ignored `artifacts/`, and builds use automatically cleaned temporary directories.
 
 The [playbook](.agents/skills/oracle-migration/references/playbook.md) includes scientific and mainframe precedents, caller-boundary capture, stateful scenario replay, toolchain setup, and baseline extension rules.
 
 ## Scope and attribution
 
-This is one bounded numerical migration. It does not demonstrate application-level caller instrumentation or a complete control-system rewrite. Gonum supplies BLAS here; future LAPACK-dependent routines must verify provider coverage.
+These are two bounded numerical migrations. They do not demonstrate application-level caller instrumentation or a complete control-system rewrite. The Gonum fork supplies native Go BLAS/LAPACK, including the real Schur decomposition needed by SB03MD. Neither migration makes a performance claim.
 
 [SLICOT](https://github.com/SLICOT/SLICOT-Reference) remains pinned under `reference/SLICOT-Reference`. It includes documentation that supplements its executable behavior. [NOTICE](NOTICE) and [LICENSE-SLICOT](LICENSE-SLICOT) preserve source attribution and upstream terms. The [COBOL modernization video](https://youtu.be/OwMu0pyYZBc) is the user-selected inspiration.

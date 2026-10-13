@@ -35,12 +35,14 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def build_reference(build_dir):
+def build_reference(build_dir, *, routine="MB01UD", sources=None, driver="oracle/reference/driver.f90", capture_sources=None):
     build_dir.mkdir(parents=True, exist_ok=True)
     fc = shutil.which(os.environ.get("FC", "gfortran"))
     if not fc:
         raise RuntimeError("gfortran is required for capture/audit, not offline verify")
-    src = ROOT / "reference/SLICOT-Reference/src/MB01UD.f"
+    src = ROOT / f"reference/SLICOT-Reference/src/{routine}.f"
+    source_paths = [src.parent / f"{name}.f" for name in (sources or [routine])]
+    driver_path = ROOT / driver
     if not src.exists():
         raise RuntimeError("run git submodule update --init --recursive")
     flags = os.environ.get("ORACLE_BLAS_LIBS")
@@ -59,8 +61,8 @@ def build_reference(build_dir):
         else:
             libs = ["-lopenblas"]
             backend = "system OpenBLAS; see linked-library hashes"
-    reference = build_dir / "mb01ud-reference"
-    compile_cmd = [fc, "-O2", "-fcheck=all", "-fno-fast-math", str(ROOT / "oracle/reference/driver.f90"), str(src), *libs, "-o", str(reference)]
+    reference = build_dir / (routine.lower() + "-reference")
+    compile_cmd = [fc, "-O2", "-fcheck=all", "-fno-fast-math", str(driver_path), *map(str, source_paths), *libs, "-o", str(reference)]
     invoke(compile_cmd)
     link_tool = "otool" if sys.platform == "darwin" else "ldd"
     link_cmd = [link_tool, "-L", str(reference)] if sys.platform == "darwin" else [link_tool, str(reference)]
@@ -81,26 +83,26 @@ def build_reference(build_dir):
         "project_dirty": bool(invoke(["git", "status", "--porcelain"])),
         "compile_command": compile_cmd,
         "threads": {"OPENBLAS_NUM_THREADS": "1", "OMP_NUM_THREADS": "1"},
-        "source_sha256": {str(p.relative_to(ROOT)): digest(p) for p in (src, ROOT/"oracle/reference/driver.f90", ROOT/"oracle/run.py", ROOT/"oracle/cases.json")},
+        "source_sha256": {str(p.relative_to(ROOT)): digest(p) for p in (*source_paths, driver_path, *(ROOT / p for p in (capture_sources or ["oracle/run.py", "oracle/cases.json"])))},
         "binary_sha256": digest(reference),
     }
 
 
-def build_candidate(build_dir):
+def build_candidate(build_dir, *, name="mb01ud", package="hessenberg", runner="oracle/run.py"):
     build_dir.mkdir(parents=True, exist_ok=True)
     go = shutil.which("go")
     if not go:
         raise RuntimeError("Go is required for verify")
-    candidate = build_dir / "mb01ud-go"
-    invoke([go, "build", "-trimpath", "-o", str(candidate), "./cmd/mb01ud-go"])
-    sources = [ROOT/"go.mod", ROOT/"go.sum", ROOT/"oracle/run.py"]
-    sources += sorted((ROOT/"hessenberg").glob("*.go"))
-    sources += sorted((ROOT/"cmd/mb01ud-go").glob("*.go"))
+    candidate = build_dir / (name + "-go")
+    invoke([go, "build", "-trimpath", "-o", str(candidate), f"./cmd/{name}-go"])
+    sources = list(dict.fromkeys([ROOT/"go.mod", ROOT/"go.sum", ROOT/"oracle/run.py", ROOT/runner]))
+    sources += sorted((ROOT/package).glob("*.go"))
+    sources += sorted((ROOT/f"cmd/{name}-go").glob("*.go"))
     return candidate, {
         "platform": platform.platform(), "python": platform.python_version(),
         "go": invoke([go,"version"]).strip(),
         "go_environment": json.loads(invoke([go,"env","-json","GOOS","GOARCH","CGO_ENABLED","GOFLAGS","GOTOOLCHAIN"])),
-        "gonum": json.loads(invoke([go,"list","-m","-json","gonum.org/v1/gonum"])),
+        "gonum": json.loads(invoke([go,"list","-m","-json","plantcontrol.org/v1/gonum"])),
         "source_sha256": {str(p.relative_to(ROOT)):digest(p) for p in sources},
         "binary_sha256": digest(candidate),
     }

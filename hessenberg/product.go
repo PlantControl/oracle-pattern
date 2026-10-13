@@ -2,8 +2,8 @@
 package hessenberg
 
 import (
-	"gonum.org/v1/gonum/blas"
-	"gonum.org/v1/gonum/blas/blas64"
+	"plantcontrol.org/v1/gonum/blas"
+	"plantcontrol.org/v1/gonum/blas/blas64"
 )
 
 // ArgumentError identifies an invalid argument or matrix descriptor.

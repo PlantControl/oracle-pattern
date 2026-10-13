@@ -1,0 +1,15 @@
+{"version":1,"task_id":"UMPS5X","kind":"created","at":"2026-09-11T11:05:53.285032Z"}
+{"version":1,"task_id":"WW4YYF","kind":"created","at":"2026-09-11T11:05:53.286286Z"}
+{"version":1,"task_id":"C7AFDQ","kind":"created","at":"2026-09-11T11:05:53.286292Z"}
+{"version":1,"task_id":"5RUZ2X","kind":"created","at":"2026-09-11T11:05:53.286299Z"}
+{"version":1,"task_id":"WW4YYF","kind":"open","at":"2026-09-11T11:06:16.826181Z"}
+{"version":1,"task_id":"C7AFDQ","kind":"open","at":"2026-09-11T11:06:16.83767Z"}
+{"version":1,"task_id":"5RUZ2X","kind":"open","at":"2026-09-11T11:06:16.849732Z"}
+{"version":1,"task_id":"WW4YYF","kind":"claim","at":"2026-09-11T11:06:16.861074Z","agent":"codex"}
+{"version":1,"task_id":"WW4YYF","kind":"done","at":"2026-09-11T11:13:41.947821Z","agent":"codex","text":"Pinned Gonum v0.18.0-fork; captured 462 calls from all seven pinned SLICOT routines with provenance and independent residual validation."}
+{"version":1,"task_id":"C7AFDQ","kind":"claim","at":"2026-09-11T11:13:41.99499Z","agent":"codex"}
+{"version":1,"task_id":"C7AFDQ","kind":"done","at":"2026-09-11T11:21:49.39551Z","agent":"codex","text":"480/480 SB03MD calls pass under versioned policy; exact same-factor estimates, captured SVD bounds for nonunique computed Schur bases, signed-zero and extreme-Dgees compatibility repairs, 13 recorded inner solves."}
+{"version":1,"task_id":"5RUZ2X","kind":"claim","at":"2026-09-11T11:21:49.414633Z","agent":"codex"}
+{"version":1,"task_id":"5RUZ2X","kind":"done","at":"2026-09-11T11:28:10.08843Z","agent":"codex","text":"Final 500/500 SB03MD + 1405/1405 MB01UD replay and native audit passed; 13 inner probes; 22 offline and 3 native infrastructure tests; 7 compiled defects rejected; race and clean-copy offline verification passed. Contract/acceptance documented. No commit or push."}
+{"version":1,"task_id":"OXDUUL","kind":"created","at":"2026-10-13T05:37:04.461104Z"}
+{"version":1,"task_id":"OXDUUL","kind":"cancel","at":"2026-10-13T09:32:08.137804Z","text":"Moved to gonum repo ergo CEBBKI"}

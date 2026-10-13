@@ -8,8 +8,8 @@ import (
 	"strconv"
 
 	"github.com/jamestjsp/oracle-pattern/hessenberg"
-	"gonum.org/v1/gonum/blas"
-	"gonum.org/v1/gonum/blas/blas64"
+	"plantcontrol.org/v1/gonum/blas"
+	"plantcontrol.org/v1/gonum/blas/blas64"
 )
 
 const guard = -987654321.125
