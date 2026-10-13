@@ -36,7 +36,7 @@ The plugin stops for a person at each of these points. The owner asked a separat
 | transform P2 | Plan gate | Panic on short slices after INFO checks; pin `gonum.Implementation{}` |
 | transform P3 | NaN/Inf parity | MB01UD-level: errors, inputs, padding and finite values match; NaN position differences reported |
 | transform P3 | Differences | Approve the 463 non-finite cases as one group; fail if Go turns a legacy-finite value into NaN/Inf |
-| verify | Sign-off | Accept with conditions: run `make test-amd64-v3` on x86-64-v3 hardware; resolve the Dtrmm follow-up (gonum ergo CEBBKI; signed as OXDUUL) |
+| verify | Sign-off | Accept with conditions: run `make test-amd64-v3` on x86-64-v3 hardware; resolve the Dtrmm follow-up (signed as OXDUUL; fixed in PlantControl/gonum#32) |
 
 ## Results
 
@@ -55,7 +55,7 @@ The plugin stops for a person at each of these points. The owner asked a separat
 
 - **OpenBLAS decides NaN positions.** The legacy NaN/Inf positions come from OpenBLAS's blocked DTRMM, not from MB01UD's own logic (Go differed in 276 of 777 non-finite cases; a model of MB01UD's own logic differed in 215). Exact NaN parity would mean copying a library's internals. The owner narrowed the requirement and recorded the remaining differences as approved.
 - **Architecture review caught a real bug.** At the float64 extremes, passing alpha into the triangular multiply produced wrong left-side results (for example 1e-30 instead of 1e-300). Scaling A first fixed it, and six edge cases became tests.
-- **Gonum fork claim, unconfirmed.** The build reported that the fork's Dtrmm skips work when alpha·b underflows. A small reproduction on simple cases did not confirm it; gonum ergo task CEBBKI tracks the follow-up.
+- **The build found a Gonum fork bug.** The build reported that the fork's `Dtrmm` skipped work when alpha·b underflows. It was confirmed in the Right/NoTrans path, a bug present since 2014, and fixed in PlantControl/gonum#32 (gonum ergo CEBBKI). This repository and the rewritten module now use the fixed fork from main.
 - **FMA changed the generator.** On arm64 the compiler fused `1 + 9*u`, so arm64 and amd64 generated different test corpora until an explicit rounding conversion was added.
 
 ## Recording gaps
