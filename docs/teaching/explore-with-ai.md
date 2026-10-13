@@ -7,7 +7,7 @@ The lesson is an interactive investigation. Let the AI help you find the relevan
 ```sh
 mkdir -p ~/workspace
 cd ~/workspace
-git clone https://github.com/jamestjsp/oracle-pattern.git
+git clone https://github.com/PlantControl/oracle-pattern.git
 cd oracle-pattern
 codex --no-alt-screen -s workspace-write -a on-request
 ```

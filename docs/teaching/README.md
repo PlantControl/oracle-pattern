@@ -17,7 +17,7 @@ Run these commands in a terminal. The first Go dependency download may need netw
 ```sh
 mkdir -p ~/workspace
 cd ~/workspace
-git clone https://github.com/jamestjsp/oracle-pattern.git
+git clone https://github.com/PlantControl/oracle-pattern.git
 cd oracle-pattern
 make verify
 ```

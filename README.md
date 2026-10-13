@@ -4,16 +4,25 @@ Capture legacy behavior once, then replay it against a modern replacement. Battl
 
 This repository contains an [agent skill](.agents/skills/oracle-migration/SKILL.md), a [migration playbook](.agents/skills/oracle-migration/references/playbook.md), and working SLICOT-to-Go demonstrations. Invoke the repository-local skill as `$oracle-migration`.
 
-## Learn the pattern
+## Modernize with Claude Code
 
-Follow the [guided teaching module](docs/teaching/README.md) from a fresh clone, with screen-navigation steps and [reusable Codex CLI prompts](docs/teaching/prompts.md).
+The [Claude Code edition](docs/teaching/claude-code/README.md) uses the [code-modernization plugin](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-modernization) to rewrite `MB01UD` from Fortran to Go: intent, preflight, assessment, business rules, a signed brief, a three-phase transform, and an independent verify that ends in a computed verdict and a human sign-off. The recorded oracle keeps the proof independent of the code being judged.
 
-The [Claude Code edition](docs/teaching/claude-code/README.md) goes further: Claude Code and the code-modernization plugin rewrite `MB01UD` in Go from intent to a signed, oracle-backed proof, in nine short chapter videos.
+```text
+/plugin install code-modernization@claude-plugins-official
+/code-modernization:modernize mb01ud --source mb01ud-legacy
+```
+
+Nine short chapters, with [follow-along steps](docs/teaching/claude-code/README.md#follow-along), [reusable prompts](docs/teaching/claude-code/prompts.md), and a [run record](docs/teaching/claude-code/run-record.md) of every decision and result.
+
+## Codex CLI edition
+
+The [original teaching module](docs/teaching/README.md) verifies the existing translation from a fresh clone, with screen-navigation steps and [reusable Codex CLI prompts](docs/teaching/prompts.md).
 
 ## Verify the translation
 
 ```sh
-git clone https://github.com/jamestjsp/oracle-pattern.git
+git clone https://github.com/PlantControl/oracle-pattern.git
 cd oracle-pattern
 make verify
 ```
